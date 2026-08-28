@@ -21,7 +21,7 @@ The following AI-centered components would be used in this project:
 # Technical Approach
 The application will be constructed of a front-end UI that is fed information for display from a multi-agent process. 
 
-The front-end will track progress through steps for each policy and/or document transformation into one or more decision assets. This will include mandatory pauses for HITL output evaluation - with automated notification to the user(s) necessary to provide review and approval - and the ability for human modification of a step's output before approving it as input to the next step, as well as metrics tracking (eg. how often outputs are tweaked before approval, etc.). As this is an internal company platform, it will leverage single sign-on authentication.
+The front-end will track progress through steps for each policy and/or document transformation into one or more decision assets. This will include mandatory pauses for HITL output evaluation - with automated notification to the user(s) necessary to provide review and approval - and the ability for human modification of a step's output before approving it as input to the next step, as well as metrics tracking (eg. how often outputs are tweaked before approval, etc.). As this is an internal company platform, it will leverage single sign-on authentication, with different security access levels governing who can edit/approve at each step pause.
 
 The back-end stepped process will run as follows. Geared steps are expected to leverage AI, while scripted steps should not require an LLM.
 
@@ -34,10 +34,27 @@ Sub-process - Schema updates:
 Sub-process - Execution wrapper:
 ![alt text](https://github.com/rizzomage/ai-programmers-final/blob/main/images/project-flow-3.png)
 
-# Example Prompts & Expected Outputs
+I expect this to primarily leverage LLM APIs - whichever is the most cost-effective - and vector storage, as well as some manner of rules file particularly to best define how to structure the code for an execution wrapper.
 
+# Example Prompts & Expected Outputs
+* Sample prompt #1 - "Analyze the provided policy document and identify business decision points contained within. For each decision point, generate a structured decision model using Decision Model & Notation (DMN) format."
+* Sample prompt #2 - "For each decision model, extract the input data fields required and output data fields produced. List these in the specified format ("{fieldFormat}")."
+* Sample prompt #3 - "For each data field, analyze whether or not it is likely to exist in the base application schema provided. Provide suggested schema element matches, with their fully realized JSON path, in a list for each data field. For fields which do not appear to have a valid match in the existing schema, collect these fields in an 'Unmatched' list." (Note: a separate prompt, with structured formatting, will be used to then suggest schema updates for Unmatched fields.)
+
+Expected output from sample prompt #1:
+* The output would be twofold - a raw list of decision points and a structured DMN model for each.
+* DMN typically follows an XML/XSD format and documentation describing this format structure would be chunked into a vector database to be leveraged by the step and inform the prompt.
+
+Expected output from sample prompt #2:
+* A pydantic-formatted list of field data Name (str) and data type (str) for each.
+
+Expected output from sample prompt #3:
+* A list of fields by Name followed by a sub-list of potential existing schema matches with their fully realized JSON paths included.
 
 # Evaluation Strategy
+As above, primarily this will leverage HITL evaluation to ensure completeness and correctness of the assets and suggestions generated prior to being committed. As well, I believe the possibility exists to track the efficacy of the generation steps - how often did a human need to correct the output. These metrics would be stored and available for view via the front-end UI.
 
+If output tweaks by a HITL hit a certain frequency threshold, prompts and supplementary documentation (eg. wrapper code rules) should be thoroughly evaluated and experimentation run for best verbiage to meet efficacy KPIs.
 
 # Observability Plan
+I believe we would need to at least track performance - eg. how long does each step take, how many tokens are used, etc. - as well as hard errors - eg. service unavailable, token usage limit exceeded, etc. We would also want to track frequencies on how often new policy document evaluations are triggered by a user and how many are aborted (left unapproved/incomplete or force-halted by a user). 
