@@ -26,13 +26,13 @@ The front-end will track progress through steps for each policy and/or document 
 The back-end stepped process will run as follows. Geared steps are expected to leverage AI, while scripted steps should not require an LLM.
 
 Main flow:
-!https://github.com/rizzomage/ai-programmers-final/blob/main/images/project-flow-1.png
+![alt text](https://github.com/rizzomage/ai-programmers-final/blob/main/images/project-flow-1.png)
 
 Sub-process - Schema updates:
-!https://github.com/rizzomage/ai-programmers-final/blob/main/images/project-flow-2.png
+![alt text](https://github.com/rizzomage/ai-programmers-final/blob/main/images/project-flow-2.png)
 
 Sub-process - Execution wrapper:
-!https://github.com/rizzomage/ai-programmers-final/blob/main/images/project-flow-3.png
+![alt text](https://github.com/rizzomage/ai-programmers-final/blob/main/images/project-flow-3.png)
 
 # Example Prompts & Expected Outputs
 
