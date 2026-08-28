@@ -23,7 +23,16 @@ The application will be constructed of a front-end UI that is fed information fo
 
 The front-end will track progress through steps for each policy and/or document transformation into one or more decision assets. This will include mandatory pauses for HITL output evaluation - with automated notification to the user(s) necessary to provide review and approval - and the ability for human modification of a step's output before approving it as input to the next step, as well as metrics tracking (eg. how often outputs are tweaked before approval, etc.). As this is an internal company platform, it will leverage single sign-on authentication.
 
+The back-end stepped process will run as follows. Geared steps are expected to leverage AI, while scripted steps should not require an LLM.
 
+Main flow:
+https://github.com/rizzomage/ai-programmers-final/blob/main/images/project-flow-1.png
+
+Sub-process - Schema updates:
+https://github.com/rizzomage/ai-programmers-final/blob/main/images/project-flow-2.png
+
+Sub-process - Execution wrapper:
+https://github.com/rizzomage/ai-programmers-final/blob/main/images/project-flow-3.png
 
 # Example Prompts & Expected Outputs
 
